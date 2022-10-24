@@ -1,0 +1,26 @@
+CREATE DATABASE ITBC_logger;
+
+CREATE TABLE Clients (
+id varchar (150),
+username varchar (50),
+password varchar (30),
+email varchar (30),
+logType varchar (30),
+PRIMARY KEY id
+)
+
+CREATE TABLE Logs (
+logID varchar (150),
+message varchar (1024),
+logType varchar (50),
+createdDate date,
+id varchar (150),
+PRIMARY KEY logID,
+FOREIGN KEY (id) REFERENCES Clients (id)
+)
+
+
+{
+    "message": "string",
+    "logType": 0
+}
