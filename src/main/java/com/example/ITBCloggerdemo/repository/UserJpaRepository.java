@@ -35,5 +35,6 @@ public interface UserJpaRepository extends JpaRepository<Client, UUID>{
     @Query (value = "SELECT password FROM Clients WHERE id=:id", nativeQuery = true) String
     getPasswordById (@Param("id") String id);
 
-
+    @Query (value = "SELECT logID FROM Logs WHERE message=:message", nativeQuery = true) String
+    getLogByMessage (@Param("message") String message);
 }

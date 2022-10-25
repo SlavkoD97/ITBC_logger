@@ -8,11 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import  java.util.Date;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.time.chrono.ChronoLocalDate;
 import java.util.*;
 
 @RestController
@@ -21,10 +24,13 @@ public class LogController {
     private UserRepository userRepository;
     private UserJpaRepository userJpaRepository;
 
+
+
     @Autowired
     public LogController(UserJpaRepository userJpaRepository, UserRepository userRepository) {
         this.userJpaRepository = userJpaRepository;
         this.userRepository = userRepository;
+
     }
 
     @PostMapping("/api/logs/create")
@@ -49,18 +55,64 @@ public class LogController {
     }
 
     @RequestMapping(value="/api/logs/search", method=RequestMethod.GET)
-    public ResponseEntity<List<Log>> getLogs (@RequestParam Map<String, String> reqParam){
+    public ResponseEntity<List<Log>> getLogs (HttpServletRequest request, @RequestParam Map<String, String> reqParam) {
         List<Log> allLogs = new LinkedList<Log>();
         List<Log> retVal = new LinkedList<Log>();
 
         allLogs = userRepository.getAllLogs();
-        if(reqParam.get("message") != null) {
-            for (var log: allLogs) {
-                if(log.getMessage().equals(reqParam.get("message"))){
-                    retVal.add(log);
+
+
+            if (reqParam.get("message") != null) {
+                for (var log : allLogs) {
+                    if (log.getMessage().equals(reqParam.get("message"))) {
+                        retVal.add(log);
+                    }
                 }
             }
-        }
+
+            if (reqParam.get("dateFrom") != null && reqParam.get("dateTo") != null) {
+                for (var log : allLogs) {
+                    String sDate1 = reqParam.get("dateFrom");
+                    String sDate2 = reqParam.get("dateTo");
+                    LocalDate localDate = LocalDate.parse(sDate1);
+                    LocalDate localDate1 = LocalDate.parse(sDate2);
+                    if (log.getCreatedDate().isAfter(localDate) && log.getCreatedDate().isBefore(localDate1)) {
+                        retVal.add(log);
+                    }
+                }
+            }
+
+
+            if (reqParam.get("dateTo") != null && reqParam.get("dateFrom") == null) {
+                for (var log : allLogs) {
+                    String sDate1 = reqParam.get("dateTo");
+                    LocalDate localDate = LocalDate.parse(sDate1);
+                    if (log.getCreatedDate().isBefore(localDate)) {
+                        retVal.add(log);
+                    }
+                }
+            }
+
+            if (reqParam.get("dateFrom") != null && reqParam.get("dateTo") == null) {
+                for (var log : allLogs) {
+                    String sDate1 = reqParam.get("dateFrom");
+                    LocalDate localDate = LocalDate.parse(sDate1);
+                    if (log.getCreatedDate().isAfter(localDate)) {
+                        retVal.add(log);
+                    }
+                }
+            }
+
+            if (reqParam.get("logType") != null) {
+                for (var log : allLogs) {
+                    int logType = Integer.parseInt(reqParam.get("logType"));
+                    if (log.getLogType() == logType) {
+                        retVal.add(log);
+                    }
+                }
+            }
+
+
 
         /*if(reqParam.get("logType") != null) {
             for (var log: allLogs) {
@@ -76,7 +128,8 @@ public class LogController {
                 }
             }
         }*/
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(retVal);
-    }
+            return ResponseEntity.status(HttpStatus.OK).body(retVal);
+        }
+
 
 }

@@ -15,4 +15,6 @@ public interface UserRepository {
     void insertLog (Log log, String token);
 
     List<Log> getAllLogs();
+
+
 }
