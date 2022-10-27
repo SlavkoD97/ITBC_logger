@@ -85,6 +85,10 @@ public class ClientController {
         String id =
                 userJpaRepository.getTypeById(token);
 
+        if (id == null){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
+        }
+
         if (id.equals("admin")) {
             retVal = userRepository.getAllClients();
 
@@ -113,7 +117,7 @@ public class ClientController {
             userJpaRepository.updatePasswordById(clientToUpdate.getPassword(), id);
 
             return ResponseEntity.status(HttpStatus.OK).body(null);
-        } else if (adminId.equals(null)) {
+        } else if (adminId== null) {
 
 
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
