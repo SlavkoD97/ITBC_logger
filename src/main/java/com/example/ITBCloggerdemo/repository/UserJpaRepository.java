@@ -1,16 +1,12 @@
 package com.example.ITBCloggerdemo.repository;
 
 import com.example.ITBCloggerdemo.model.Client;
-import com.example.ITBCloggerdemo.model.Log;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
-
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-
-import java.util.Optional;
-import java.util.UUID;
-import java.util.List;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 @Repository
@@ -37,4 +33,16 @@ public interface UserJpaRepository extends JpaRepository<Client, UUID>{
 
     @Query (value = "SELECT logID FROM Logs WHERE message=:message", nativeQuery = true) String
     getLogByMessage (@Param("message") String message);
+
+    @Query (value = "SELECT userType FROM Clients WHERE id=:id", nativeQuery = true) String
+    getTypeById (@Param("id") String id);
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE Clients SET password =:password WHERE id =:id", nativeQuery = true) void
+    updatePasswordById (@Param ("password") String password, @Param("id") String id);
+
+    @Query(value = "SELECT COUNT(*) FROM LOGS WHERE id=:id", nativeQuery = true) String
+    getNumberOfLogs (@Param("id") String id);
+
+
 }

@@ -7,7 +7,6 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -50,8 +49,13 @@ public class SqlUserRepository implements UserRepository {
     jdbcTemplate.execute(action);
     }
 
+    @Override
+    public List<Client> getAllClients(){
+        String action= "SELECT * FROM CLIENTS WHERE userType like 'user'";
+        return jdbcTemplate.query(
+                action,
+                BeanPropertyRowMapper.newInstance(Client.class));
 
-
-
+    }
 
 }

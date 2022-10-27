@@ -1,10 +1,9 @@
 package com.example.ITBCloggerdemo.model;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.UUID;
-
-import javax.persistence.Id;
 
 @Entity
 @Table(name= "Clients")
@@ -29,6 +28,10 @@ public class Client {
 
     public Client() {
 
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     public String getAccount() {
