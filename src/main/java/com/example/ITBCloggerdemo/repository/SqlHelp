@@ -5,8 +5,8 @@ id varchar (150),
 username varchar (50),
 password varchar (30),
 email varchar (30),
-logType varchar (30),
-PRIMARY KEY id
+userType varchar (30),
+PRIMARY KEY (id)
 )
 
 CREATE TABLE Logs (
@@ -15,7 +15,7 @@ message varchar (1024),
 logType varchar (50),
 createdDate date,
 id varchar (150),
-PRIMARY KEY logID,
+PRIMARY KEY (logID),
 FOREIGN KEY (id) REFERENCES Clients (id)
 )
 

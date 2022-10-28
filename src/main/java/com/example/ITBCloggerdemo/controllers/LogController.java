@@ -38,7 +38,7 @@ public class LogController {
         String token = null;
         Log newLog = new Log(log.getMessage(), log.getLogType(), log.getCreatedDate());
         if(log.getLogType() > 2) {
-            ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
         HttpSession session = request.getSession();
 
@@ -67,6 +67,7 @@ public class LogController {
         HttpSession session = request.getSession();
 
         token = (String)session.getAttribute("token");
+
         if(token == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
