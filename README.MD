@@ -1,4 +1,4 @@
-1. Name: ITBC-logger-demo
+![img.png](img.png)1. Name: ITBC-logger-demo
 2. Project documentation:
    1. Technologies used on the project:
       1. Java version 19
