@@ -8,11 +8,18 @@
          1. Dependencies: Spring WEB, Spring Data JPA, Spring Data JDBC
    2. Endpoint list:
       1. /api/clients/register - put
+         1. JSON form { "username": "...", "password": "....", "email":"..."}
       2. /api/clients/login - put
+         1. JSON FORM { "account": "......"}
       3. /api/logs/create - put
+         1. JSON FORM { "message": "......", "logType": "....."}
       4. /api/logs/search - get
+         1. Params: dateFrom, dateTo, message, logType
       5. /api/clients - get
+         1. Admin only!
       6. /api/clients/{clientsId/reset-password} - patch
+         1. JSON form {"password": "......"}
+         2. Admin only!
 3. Installation and setup
    1. List of querries necesary for setting up the base is in the project file "Sql Help"
    2. Tables in the base:
