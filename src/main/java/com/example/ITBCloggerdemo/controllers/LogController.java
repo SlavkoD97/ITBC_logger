@@ -72,7 +72,7 @@ public class LogController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
         if (reqParam.get("logType") != null){
-            if (Integer.parseInt(reqParam.get("logType")) > 3 || Integer.parseInt(reqParam.get("logType")) < 0) {
+            if (Integer.parseInt(reqParam.get("logType")) > 2 || Integer.parseInt(reqParam.get("logType")) < 0) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
             }
         }
