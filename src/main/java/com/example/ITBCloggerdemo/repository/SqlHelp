@@ -20,7 +20,5 @@ FOREIGN KEY (id) REFERENCES Clients (id)
 )
 
 
-{
-    "message": "string",
-    "logType": 0
-}
+Important note: Administrators for this application can't be registered through application. They need to be registered through database, because of security procedure.
+{..."userType": "admin"}!
